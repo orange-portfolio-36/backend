@@ -6,6 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "ts-node -r dotenv/config ./src/server.ts",
+    "dev": "node --watch -r ts-node/register -r dotenv/config ./src/server.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev"
   },
