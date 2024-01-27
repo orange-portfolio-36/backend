@@ -28,8 +28,7 @@ Antes de começar, certifique-se de ter o Docker 25 ou superior instalado no seu
 
 1.  Crie um arquivo de configuração `.env` na raiz do seu projeto e configure as variáveis necessárias. Exemplo:
 
-        ```env
-
+```env
     POSTGRES_HOST=custom_host
     POSTGRES_PORT=3456
     POSTGRES_PASSWORD=secret
@@ -42,7 +41,7 @@ Antes de começar, certifique-se de ter o Docker 25 ou superior instalado no seu
 
 ## Rodando a Aplicação
 
-Agora que as dependências estão instaladas e as configurações foram feitas, você pode iniciar o servidor localmente. Execute os seguintes comandos, cada um deve ser executado em termiais diferentes:
+Agora que as dependências estão instaladas e as configurações foram feitas, você pode iniciar o servidor localmente. Execute os seguintes comandos, cada um deve ser executado em terminais diferentes:
 
 ```bash
 docker compose watch
