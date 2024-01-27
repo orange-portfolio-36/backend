@@ -17,3 +17,7 @@ model User {
   firstName String
   lastName  String
 }
+
+model Tag{
+  name String @unique
+}
