@@ -3,6 +3,6 @@ import { signUp } from "../../controllers";
 
 const publicRouters = Router();
 
-publicRouters.use(signUp);
+publicRouters.use('/user', signUp);
 
 export default publicRouters;

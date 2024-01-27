@@ -1,16 +1,21 @@
-import express from 'express'
-import 'express-async-errors'
-import cors from 'cors'
-import helmet from 'helmet'
-import router from './routers'
-import { errorMiddleware } from './middlewares/errorMiddleware'
-const app = express()
+import express from "express";
+import "express-async-errors";
+import cors from "cors";
+import helmet from "helmet";
+import router from "./routers";
+import { errorMiddleware } from "./middlewares/errorMiddleware";
+import {serve as serveSwagger, setup} from "swagger-ui-express";
+import swaggerDocument from "./docs/swagger";
 
-app.use(cors())
-app.use(helmet())
+const app = express();
 
-app.use(router)
+app.use(cors());
+app.use(helmet());
 
-app.use(errorMiddleware)
+app.use('/', router);
 
-export default app
+app.use('/docs', serveSwagger, setup(swaggerDocument))
+
+app.use(errorMiddleware);
+
+export default app;
