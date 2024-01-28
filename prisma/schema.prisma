@@ -19,17 +19,17 @@ model User {
 }
 
 model Project {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
-  descricao   String
-  usuario_id  Int
-  url_projeto String
-  url_image   String 
-  tags        Json[] 
+  description String
+  user_id     Int
+  url_project String
+  url_image   String
+  tags        Tag[]    
 }
 
 model Tag {
-  id        Int       @id @default(autoincrement())
-  name      String    @unique
-  
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  projects Project[] 
 }

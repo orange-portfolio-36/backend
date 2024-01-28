@@ -14,11 +14,9 @@ async function createTag(tagName: string) {
   
   } 
 
-// Example
 const tagName: string[] = ['UX', 'Web', 'Mobile'];
 
 tagName.map(e => {
     createTag(e)
 })
 
-/* createTag(tagName); */

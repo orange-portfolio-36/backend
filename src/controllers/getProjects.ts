@@ -1,4 +1,4 @@
-import {PrismaClient, Project } from '@prisma/client'
+/* import {PrismaClient, Project } from '@prisma/client'
 
 const prisma = new PrismaClient();
 
@@ -26,4 +26,4 @@ async function getProjects(nameTag?: string[]){
 
 }
 
-getProjects(['work'])
+getProjects(['work']) */
