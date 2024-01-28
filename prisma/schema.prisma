@@ -24,12 +24,12 @@ model Project {
   descricao   String
   usuario_id  Int
   url_projeto String
-  url_image   String
-  tags        Tag[]     
+  url_image   String 
+  tags        Json[] 
 }
 
 model Tag {
   id        Int       @id @default(autoincrement())
   name      String    @unique
-  projects  Project[] 
+  
 }
