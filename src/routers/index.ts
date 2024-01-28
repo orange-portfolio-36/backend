@@ -3,6 +3,6 @@ import publicRouters from "./publicRouters";
 
 const router = Router();
 
-router.use(publicRouters);
+router.use("/public", publicRouters);
 
 export default router;
