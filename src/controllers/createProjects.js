@@ -72,5 +72,25 @@ var projectData = {
     url_project: "https://ejemplo.com/proyecto",
     url_image: "https://ejemplo.com/imagen.jpg",
 };
+var projectData2 = {
+    id: 0,
+    name: "Design",
+    description: "Este es mi Design",
+    user_id: 2,
+    url_project: "https://ejemplo.com/proyectobalalala",
+    url_image: "https://ejemplo.com/imagenasdsa.jpg",
+};
+var projectData3 = {
+    id: 0,
+    name: "Portfolio",
+    description: "Este es mi portfolio",
+    user_id: 3,
+    url_project: "https://ejemplo.com/proyectoasdfasfd",
+    url_image: "https://ejemplo.com/imagendfdf.jpg",
+};
 var selectedTagIds = [1, 3];
+var selectedTagIds2 = [2];
+var selectedTagIds3 = [3];
 createProject(projectData, selectedTagIds);
+createProject(projectData2, selectedTagIds2);
+createProject(projectData3, selectedTagIds3);

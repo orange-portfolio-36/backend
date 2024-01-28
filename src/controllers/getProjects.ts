@@ -1,29 +1,50 @@
-/* import {PrismaClient, Project } from '@prisma/client'
+import {PrismaClient, Project } from '@prisma/client'
 
 const prisma = new PrismaClient();
 
-async function getProjects(nameTag?: string[]){
+interface Tag {
+  id: number;
+  name: string;
+}
 
-  if(nameTag){
+async function getProjects(tags: Tag[]){
+
+  const tagsName = tags.map(e => e.name)
+
+  if(tags){
+
+    console.log("parameter " + tagsName);
    
-    const projectsWithTag = await prisma.tag.findUnique({
+      const projects = await prisma.project.findMany({
+        where: {
+          tags: {
+            some: {
+              name: {
+                in: tagsName.map(e => e),
+              },
+            },
+          },
+        },
+      });
+    
 
-      where: {
-        name: nameTag[0],
-      },
-    })
-    .projects();
+    console.log(projects);
 
-  return projectsWithTag;
+    return
   }
+
+  
 
   const projects = await prisma.project.findMany({
     include:{
       tags:true
+
     }
   })
-  console.log(projects)
+
 
 }
 
-getProjects(['work']) */
+const tags = [{id:2, name:"Mobile"}];
+
+getProjects(tags);

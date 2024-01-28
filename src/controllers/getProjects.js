@@ -38,22 +38,41 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var client_1 = require("@prisma/client");
 var prisma = new client_1.PrismaClient();
-function getProjects() {
+function getProjects(tags) {
     return __awaiter(this, void 0, void 0, function () {
-        var projects;
+        var tagsName, projects_1, projects;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, prisma.project.findMany({
+                case 0:
+                    tagsName = tags.map(function (e) { return e.name; });
+                    if (!tags) return [3 /*break*/, 2];
+                    console.log("parameter " + tagsName);
+                    return [4 /*yield*/, prisma.project.findMany({
+                            where: {
+                                tags: {
+                                    some: {
+                                        name: {
+                                            in: tagsName.map(function (e) { return e; }),
+                                        },
+                                    },
+                                },
+                            },
+                        })];
+                case 1:
+                    projects_1 = _a.sent();
+                    console.log(projects_1);
+                    return [2 /*return*/];
+                case 2: return [4 /*yield*/, prisma.project.findMany({
                         include: {
                             tags: true
                         }
                     })];
-                case 1:
+                case 3:
                     projects = _a.sent();
-                    console.log(projects);
                     return [2 /*return*/];
             }
         });
     });
 }
-getProjects();
+var tags = [{ id: 2, name: "Mobile" }];
+getProjects(tags);
