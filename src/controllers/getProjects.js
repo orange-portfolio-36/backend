@@ -36,43 +36,42 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var client_1 = require("@prisma/client");
-var prisma = new client_1.PrismaClient();
+var prismaConfig_1 = require("../configs/prismaConfig");
 function getProjects(tags) {
     return __awaiter(this, void 0, void 0, function () {
-        var tagsName, projects_1, projects;
+        var tagsName, projectsFilter, projects;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    tagsName = tags.map(function (e) { return e.name; });
+                    tagsName = tags === null || tags === void 0 ? void 0 : tags.map(function (e) { return e.name; });
                     if (!tags) return [3 /*break*/, 2];
-                    console.log("parameter " + tagsName);
-                    return [4 /*yield*/, prisma.project.findMany({
+                    return [4 /*yield*/, prismaConfig_1.default.project.findMany({
                             where: {
                                 tags: {
                                     some: {
                                         name: {
-                                            in: tagsName.map(function (e) { return e; }),
+                                            in: tagsName === null || tagsName === void 0 ? void 0 : tagsName.map(function (e) { return e; }),
                                         },
                                     },
                                 },
                             },
                         })];
                 case 1:
-                    projects_1 = _a.sent();
-                    console.log(projects_1);
+                    projectsFilter = _a.sent();
+                    console.log(projectsFilter);
                     return [2 /*return*/];
-                case 2: return [4 /*yield*/, prisma.project.findMany({
+                case 2: return [4 /*yield*/, prismaConfig_1.default.project.findMany({
                         include: {
                             tags: true
                         }
                     })];
                 case 3:
                     projects = _a.sent();
+                    console.log(projects);
                     return [2 /*return*/];
             }
         });
     });
 }
 var tags = [{ id: 2, name: "Mobile" }];
-getProjects(tags);
+getProjects([{ id: 1, name: "UX" }]);

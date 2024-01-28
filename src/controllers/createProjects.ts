@@ -1,6 +1,5 @@
-import { PrismaClient, Project,  } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import {Project} from "@prisma/client"
+import prisma from "../configs/prismaConfig";
 
 async function createProject(projectData: Project,selectedTagIds:number[]) {
 
@@ -17,11 +16,10 @@ const createdProject = await prisma.project.create({
   },
 });
 
-console.log(createdProject)
-
 }
 
-// Example
+// Just a example for testing
+
 const projectData = {
   id:0,
   name: "Portfolio",
@@ -48,6 +46,7 @@ const projectData3 = {
   url_project: "https://ejemplo.com/proyectoasdfasfd",
   url_image: "https://ejemplo.com/imagendfdf.jpg",
 };
+
 
 const selectedTagIds = [1,3]
 const selectedTagIds2 = [2]

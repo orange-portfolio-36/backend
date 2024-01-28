@@ -1,26 +1,22 @@
-import {PrismaClient, Project } from '@prisma/client'
-
-const prisma = new PrismaClient();
+import prisma from "../configs/prismaConfig";
 
 interface Tag {
   id: number;
   name: string;
 }
 
-async function getProjects(tags: Tag[]){
+async function getProjects(tags?: Tag[]){
 
-  const tagsName = tags.map(e => e.name)
+  const tagsName = tags?.map(e => e.name)
 
   if(tags){
-
-    console.log("parameter " + tagsName);
-   
-      const projects = await prisma.project.findMany({
+ 
+      const projectsFilter = await prisma.project.findMany({
         where: {
           tags: {
             some: {
               name: {
-                in: tagsName.map(e => e),
+                in: tagsName?.map(e => e),
               },
             },
           },
@@ -28,7 +24,7 @@ async function getProjects(tags: Tag[]){
       });
     
 
-    console.log(projects);
+    console.log(projectsFilter);
 
     return
   }
@@ -42,9 +38,10 @@ async function getProjects(tags: Tag[]){
     }
   })
 
+console.log(projects);
 
 }
 
 const tags = [{id:2, name:"Mobile"}];
 
-getProjects(tags);
+getProjects([{id:1,name:"UX"}]);
