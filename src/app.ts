@@ -1,4 +1,4 @@
-import express from "express";
+import express, { json } from "express";
 import "express-async-errors";
 import cors from "cors";
 import helmet from "helmet";
@@ -9,6 +9,7 @@ import swaggerDocument from "./docs/swagger";
 
 const app = express();
 
+app.use(json());
 app.use(cors());
 app.use(helmet());
 
