@@ -47,12 +47,23 @@ const projectData3 = {
   url_image: "https://ejemplo.com/imagendfdf.jpg",
 };
 
+const projectData4 = {
+  id:0,
+  name: "Other Portfolio",
+  description: "Este es mi segundo portfolio",
+  user_id: 3,
+  url_project: "https://ejemplo.com/proyectoasdfasfd",
+  url_image: "https://ejemplo.com/imagendfdf.jpg",
+};
+
 
 const selectedTagIds = [1,3]
 const selectedTagIds2 = [2]
 const selectedTagIds3 = [3]
+const selectedTagIds4 = [1]
 
 createProject(projectData,selectedTagIds);
 createProject(projectData2,selectedTagIds2);
 createProject(projectData3,selectedTagIds3);
+createProject(projectData4,selectedTagIds4);
 

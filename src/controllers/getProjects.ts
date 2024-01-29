@@ -1,4 +1,5 @@
 import prisma from "../configs/prismaConfig";
+import { filter } from "./filterByTag";
 
 interface Tag {
   id: number;
@@ -7,29 +8,15 @@ interface Tag {
 
 async function getProjects(tags?: Tag[]){
 
-  const tagsName = tags?.map(e => e.name)
-
   if(tags){
  
-      const projectsFilter = await prisma.project.findMany({
-        where: {
-          tags: {
-            some: {
-              name: {
-                in: tagsName?.map(e => e),
-              },
-            },
-          },
-        },
-      });
-    
+   const result = await filter(tags);
 
-    console.log(projectsFilter);
+   console.log(result)
 
-    return
+   return
   }
 
-  
 
   const projects = await prisma.project.findMany({
     include:{
@@ -44,4 +31,4 @@ console.log(projects);
 
 const tags = [{id:2, name:"Mobile"}];
 
-getProjects([{id:1,name:"UX"}]);
+getProjects();
