@@ -23,7 +23,7 @@ const createdProject = await prisma.project.create({
 const projectData = {
   id:0,
   name: "Portfolio",
-  description: "Este es mi portfolio",
+  description: "soy el primero",
   user_id: 1,
   url_project: "https://ejemplo.com/proyecto",
   url_image: "https://ejemplo.com/imagen.jpg",

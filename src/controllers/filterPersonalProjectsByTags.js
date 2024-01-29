@@ -36,69 +36,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.filterPersonal = void 0;
 var prismaConfig_1 = require("../configs/prismaConfig");
-function createProject(projectData, selectedTagIds) {
-    return __awaiter(this, void 0, void 0, function () {
-        var createdProject;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, prismaConfig_1.default.project.create({
-                        data: {
-                            name: projectData.name,
-                            description: projectData.description,
-                            user_id: projectData.user_id,
-                            url_project: projectData.url_project,
-                            url_image: projectData.url_image,
+var filterPersonal = function (tags, id) { return __awaiter(void 0, void 0, void 0, function () {
+    var tagsName, projectsFilter;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                tagsName = tags === null || tags === void 0 ? void 0 : tags.map(function (e) { return e.name; });
+                console.log(tagsName + " " + id);
+                return [4 /*yield*/, prismaConfig_1.default.project.findMany({
+                        where: {
+                            user_id: id,
                             tags: {
-                                connect: selectedTagIds.map(function (tagId) { return ({ id: tagId }); }),
+                                some: {
+                                    name: {
+                                        in: tagsName === null || tagsName === void 0 ? void 0 : tagsName.map(function (e) { return e; }),
+                                    },
+                                },
                             },
                         },
+                        include: {
+                            tags: true
+                        }
                     })];
-                case 1:
-                    createdProject = _a.sent();
-                    return [2 /*return*/];
-            }
-        });
+            case 1:
+                projectsFilter = _a.sent();
+                return [2 /*return*/, projectsFilter];
+        }
     });
-}
-// Just a example for testing
-var projectData = {
-    id: 0,
-    name: "Portfolio",
-    description: "soy el primero",
-    user_id: 1,
-    url_project: "https://ejemplo.com/proyecto",
-    url_image: "https://ejemplo.com/imagen.jpg",
-};
-var projectData2 = {
-    id: 0,
-    name: "Design",
-    description: "Este es mi Design",
-    user_id: 2,
-    url_project: "https://ejemplo.com/proyectobalalala",
-    url_image: "https://ejemplo.com/imagenasdsa.jpg",
-};
-var projectData3 = {
-    id: 0,
-    name: "Portfolio",
-    description: "Este es mi portfolio",
-    user_id: 3,
-    url_project: "https://ejemplo.com/proyectoasdfasfd",
-    url_image: "https://ejemplo.com/imagendfdf.jpg",
-};
-var projectData4 = {
-    id: 0,
-    name: "Other Portfolio",
-    description: "Este es mi segundo portfolio",
-    user_id: 3,
-    url_project: "https://ejemplo.com/proyectoasdfasfd",
-    url_image: "https://ejemplo.com/imagendfdf.jpg",
-};
-var selectedTagIds = [1, 3];
-var selectedTagIds2 = [2];
-var selectedTagIds3 = [3];
-var selectedTagIds4 = [1];
-createProject(projectData, selectedTagIds);
-createProject(projectData2, selectedTagIds2);
-createProject(projectData3, selectedTagIds3);
-createProject(projectData4, selectedTagIds4);
+}); };
+exports.filterPersonal = filterPersonal;

@@ -38,16 +38,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.myProjects = void 0;
 var prismaConfig_1 = require("../configs/prismaConfig");
-var myProjects = function (id) { return __awaiter(void 0, void 0, void 0, function () {
-    var res;
+var filterPersonalProjectsByTags_1 = require("./filterPersonalProjectsByTags");
+var myProjects = function (id, tags) { return __awaiter(void 0, void 0, void 0, function () {
+    var result, res;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, prismaConfig_1.default.project.findMany({
+            case 0:
+                if (!tags) return [3 /*break*/, 2];
+                return [4 /*yield*/, (0, filterPersonalProjectsByTags_1.filterPersonal)(tags, id)];
+            case 1:
+                result = _a.sent();
+                console.log(result);
+                return [2 /*return*/];
+            case 2: return [4 /*yield*/, prismaConfig_1.default.project.findMany({
                     where: {
                         user_id: id
                     }
                 })];
-            case 1:
+            case 3:
                 res = _a.sent();
                 console.log(res);
                 return [2 /*return*/];
@@ -55,4 +63,5 @@ var myProjects = function (id) { return __awaiter(void 0, void 0, void 0, functi
     });
 }); };
 exports.myProjects = myProjects;
-(0, exports.myProjects)(2);
+var tags = [{ id: 1, name: "UX" }];
+(0, exports.myProjects)(3, tags);

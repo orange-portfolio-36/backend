@@ -1,6 +1,22 @@
 import prisma from "../configs/prismaConfig";
+import { filterPersonal } from "./filterPersonalProjectsByTags";
 
-export const myProjects = async (id: number)  => {
+
+interface Tag {
+    id: number;
+    name: string;
+  }
+
+export const myProjects = async (id: number, tags?: Tag[])  => {
+
+if(tags){
+
+    const result = await filterPersonal(tags,id);
+
+    console.log(result)
+ 
+    return
+}
 
     const res = await prisma.project.findMany({
         where:{
@@ -9,7 +25,9 @@ export const myProjects = async (id: number)  => {
     })
 
     console.log(res)
+    
 
 }
 
-myProjects(2)
+const tags = [{id:1, name:"UX"}];
+myProjects(3,tags)
