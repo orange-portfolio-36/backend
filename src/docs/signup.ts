@@ -49,17 +49,6 @@ const signupDefinition = {
           },
         },
       },
-      "400": {
-        description:
-          "Erro de solicitação inválida. Verifique os parâmetros da solicitação.",
-        content: {
-          "application/json": {
-            example: {
-              error: "Parâmetros de solicitação inválidos.",
-            },
-          },
-        },
-      },
       "409": {
         description: "O endereço de e-mail já está em uso por outro usuário.",
         content: {
