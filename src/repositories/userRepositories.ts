@@ -1,23 +1,18 @@
-import { User } from "@prisma/client";
 import prisma from "../configs/prismaConfig";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { userConflictError } from "../errors/user/userConflictError";
+import { SignupBody } from "../@types";
+import { User } from "@prisma/client";
 
-async function create(user: User) {
-  try {
-    await prisma.user.create({ data: user });
-  } catch (err) {
-    const error = err as PrismaClientKnownRequestError;
-    if (!error?.code) {
-      throw error;
-    }
-    if (error.code === "P2002") {
-      //Unique constraint error
-      throw userConflictError(error);
-    }
-  }
+function create(body: SignupBody) {
+  return prisma.user.create({ data: body });
+}
+
+function findOrFail({ email }: Pick<User, "email">) {
+  return prisma.user.findUniqueOrThrow({
+    where: { email },
+  });
 }
 
 export const userRepository = {
   create,
+  findOrFail,
 };
