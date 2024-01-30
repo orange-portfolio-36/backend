@@ -1,5 +1,5 @@
 import prisma from "../configs/prismaConfig";
-import { filterPersonal } from "./filterPersonalProjectsByTags";
+import { filterPersonal } from "./filterPersonalProjectsByTagsControllers";
 
 
 interface Tag {

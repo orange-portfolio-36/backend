@@ -1,5 +1,5 @@
 import prisma from "../configs/prismaConfig";
-import { filter } from "./filterByTag";
+import { filter } from "./filterByTagControllers";
 
 interface Tag {
   id: number;
