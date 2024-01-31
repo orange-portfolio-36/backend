@@ -6,6 +6,7 @@ import { SigninBody, SignupBody, TokenPayload } from "../@types";
 import { unauthorizedError } from "../errors/unauthorizedError";
 import { sessionRepository } from "../repositories/sessionRepositories";
 import jwt from "jsonwebtoken";
+import { getAccessToken } from "../helpers/getAccessToken";
 
 async function signUp(body: SignupBody) {
   const salts = process.env.HASH_SALTS || 12;
@@ -29,7 +30,7 @@ async function signIn({ email, password }: SigninBody) {
   const refreshToken = jwt.sign(payload, secret, {
     expiresIn: "1d",
   });
-  const accessToken = jwt.sign(payload, secret, { expiresIn: 60 });
+  const accessToken = getAccessToken(payload);
 
   await sessionRepository.create({ token: refreshToken, userId: user.id });
 
