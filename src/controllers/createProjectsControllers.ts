@@ -1,69 +1,22 @@
-import {Project} from "@prisma/client"
-import prisma from "../configs/prismaConfig";
+import { Request, Response } from "express";
+import { Project } from "@prisma/client";
+import { createProjectRepository } from "../repositories/createProjectsRepositories";
 
-async function createProject(projectData: Project,selectedTagIds:number[]) {
-
-const createdProject = await prisma.project.create({
-  data: {
-    name: projectData.name,
-    description: projectData.description,
-    user_id: projectData.user_id,
-    url_project: projectData.url_project,
-    url_image: projectData.url_image,
-    tags: {
-      connect: selectedTagIds.map(tagId => ({ id: tagId })),
-    },
-  },
-});
-
+interface RegisterProjectRequest {
+  projectData: Project;
+  userId: number[];
 }
 
-// Just a example for testing
+export async function registerProject(req: Request<{}, {}, RegisterProjectRequest>, res: Response) {
+  const { projectData, userId } = req.body
 
-const projectData = {
-  id:0,
-  name: "Portfolio",
-  description: "soy el primero",
-  user_id: 1,
-  url_project: "https://ejemplo.com/proyecto",
-  url_image: "https://ejemplo.com/imagen.jpg",
-};
+  console.log("Esta es la respuesta: " + projectData)
 
-const projectData2 = {
-  id:0,
-  name: "Design",
-  description: "Este es mi Design",
-  user_id: 2,
-  url_project: "https://ejemplo.com/proyectobalalala",
-  url_image: "https://ejemplo.com/imagenasdsa.jpg",
-};
+  await createProjectRepository.createProject(projectData, userId);
 
-const projectData3 = {
-  id:0,
-  name: "Portfolio",
-  description: "Este es mi portfolio",
-  user_id: 3,
-  url_project: "https://ejemplo.com/proyectoasdfasfd",
-  url_image: "https://ejemplo.com/imagendfdf.jpg",
-};
-
-const projectData4 = {
-  id:0,
-  name: "Other Portfolio",
-  description: "Este es mi segundo portfolio",
-  user_id: 3,
-  url_project: "https://ejemplo.com/proyectoasdfasfd",
-  url_image: "https://ejemplo.com/imagendfdf.jpg",
-};
+  res.sendStatus(201);
+  
+}
 
 
-const selectedTagIds = [1,3]
-const selectedTagIds2 = [2]
-const selectedTagIds3 = [3]
-const selectedTagIds4 = [1]
-
-createProject(projectData,selectedTagIds);
-createProject(projectData2,selectedTagIds2);
-createProject(projectData3,selectedTagIds3);
-createProject(projectData4,selectedTagIds4);
 
