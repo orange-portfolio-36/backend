@@ -6,7 +6,7 @@ import router from "./routers";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import {serve as serveSwagger, setup} from "swagger-ui-express";
 import swaggerDocument from "./docs/swagger";
-import bodyParser from "body-parser";
+
 
 
 const app = express();
@@ -14,8 +14,7 @@ const app = express();
 app.use(cors());
 app.use(helmet());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use('/', router);
 
