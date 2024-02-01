@@ -5,8 +5,6 @@ import { SigninBody, SignupBody } from "../@types";
 export async function signUp(req: Request<{}, {}, SignupBody>, res: Response) {
   const body = req.body;
 
-  console.log(body)
-
   await userService.signUp(body);
 
   res.sendStatus(201);

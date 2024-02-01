@@ -10,4 +10,3 @@ export function errorMiddleware(err: CustomError, req: Request, res: Response, n
   
     res.status(statusCode).send({ error: errorMessage });
 }
-

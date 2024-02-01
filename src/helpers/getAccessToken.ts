@@ -1,5 +1,6 @@
 import { TokenPayload } from "../@types";
 import jwt from "jsonwebtoken";
+import { getSecret } from "./getSecret";
 
 export function getAccessToken(payload: TokenPayload) {
   const secret = getSecret();
