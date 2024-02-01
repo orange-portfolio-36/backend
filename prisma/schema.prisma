@@ -17,6 +17,7 @@ model User {
   firstName String
   lastName  String
   Session   Session[]
+  Project   Project[]
 }
 
 model Session {
@@ -27,6 +28,30 @@ model Session {
   User   User @relation(fields: [userId], references: [id])
 }
 
+model Project {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  url_project String
+  url_image   String
+
+  userId     Int
+  User       User         @relation(fields: [userId], references: [id])
+  ProjectTag ProjectTag[]
+}
+
+model ProjectTag {
+  projectId Int
+  Project  Project @relation(fields: [projectId], references: [id])
+
+  tagId Int
+  Tag  Tag @relation(fields: [tagId], references: [id])
+
+  @@unique([tagId, projectId])
+}
+
 model Tag {
-  name String @unique
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  ProjectTag ProjectTag[]
 }
