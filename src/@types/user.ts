@@ -8,7 +8,3 @@ export type SigninBody = Pick<User, "email" | "password">;
 export interface TokenPayload {
   userId: string;
 }
-
-export interface ProtectedRequest extends Request {
-  userId: string;
-}
