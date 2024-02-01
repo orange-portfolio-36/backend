@@ -1,6 +1,7 @@
 import { SessionBody, SessionRevoke, TokenPayload } from "../@types";
 import { unauthorizedError } from "../errors/unauthorizedError";
 import { getAccessToken } from "../helpers/getAccessToken";
+import { getSecret } from "../helpers/getSecret";
 import { sessionRepository } from "../repositories/sessionRepositories";
 import jwt from "jsonwebtoken";
 
