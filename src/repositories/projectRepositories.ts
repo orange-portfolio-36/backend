@@ -7,6 +7,19 @@ async function create(body: ProjectBody) {
   });
 }
 
+async function getAll() {
+  return await prisma.project.findMany({
+    include: {
+      ProjectTag: {
+        include: {
+          Tag: true
+        },
+      },
+    },
+  });
+}
+
 export const projectRepository = {
   create,
+  getAll,
 };
