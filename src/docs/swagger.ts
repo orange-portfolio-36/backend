@@ -1,3 +1,4 @@
+import { signinDefinition } from "./signin";
 import signupDefinition from "./signup";
 
 
@@ -10,7 +11,8 @@ const swaggerDocument = {
     description: 'Descrição do Seu Projeto',
   },
   paths: {
-    '/user/signup': signupDefinition
+    '/user/signup': signupDefinition,
+    '/user/signin': signinDefinition
   },
   // Adicione outras definições conforme necessário
 }

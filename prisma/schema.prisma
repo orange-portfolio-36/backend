@@ -11,25 +11,47 @@ datasource db {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
-  email     String @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   password  String
   firstName String
   lastName  String
+  Session   Session[]
+  Project   Project[]
+}
+
+model Session {
+  id    String @id @default(uuid())
+  token String @unique
+
+  userId Int
+  User   User @relation(fields: [userId], references: [id])
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   name        String
   description String
-  user_id     Int
   url_project String
   url_image   String
-  tags        Tag[]    
+
+  userId     Int
+  User       User         @relation(fields: [userId], references: [id])
+  ProjectTag ProjectTag[]
+}
+
+model ProjectTag {
+  projectId Int
+  Project  Project @relation(fields: [projectId], references: [id])
+
+  tagId Int
+  Tag  Tag @relation(fields: [tagId], references: [id])
+
+  @@unique([tagId, projectId])
 }
 
 model Tag {
-  id     Int     @id @default(autoincrement())
-  name   String  @unique
-  projects Project[] 
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  ProjectTag ProjectTag[]
 }
