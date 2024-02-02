@@ -1,9 +1,15 @@
 import { Router } from "express";
-import { authMiddleware } from "../middlewares/authMiddleware";
-import { createProject } from "../controllers/projectControllers";
+import {
+  createProject,
+  findProjectsByTags,
+  getAllProjects,
+} from "../controllers/projectControllers";
 
 const projectRouter = Router();
 
-projectRouter.post("/", authMiddleware, createProject);
+projectRouter
+  .post("/", createProject)
+  .get("/all", getAllProjects)
+  .post("/tags", findProjectsByTags);
 
-export default projectRouter
+export default projectRouter;

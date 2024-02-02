@@ -1,9 +1,8 @@
 import { Router } from "express";
-import { authMiddleware } from "../middlewares/authMiddleware";
 import { getAll } from "../controllers/tagController";
 
 const tagRouter = Router();
 
-tagRouter.get("/all", authMiddleware, getAll);
+tagRouter.get("/all", getAll);
 
 export default tagRouter;

@@ -12,7 +12,28 @@ async function getAll() {
     include: {
       ProjectTag: {
         include: {
-          Tag: true
+          Tag: true,
+        },
+      },
+    },
+  });
+}
+
+async function getByTags(tags: number[]) {
+  return await prisma.project.findMany({
+    where: {
+      ProjectTag: {
+        some: {
+          tagId: {
+            in: tags,
+          },
+        },
+      },
+    },
+    include: {
+      ProjectTag: {
+        include: {
+          Tag: true,
         },
       },
     },
@@ -22,4 +43,5 @@ async function getAll() {
 export const projectRepository = {
   create,
   getAll,
+  getByTags,
 };
