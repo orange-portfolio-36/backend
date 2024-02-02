@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 async function seedUsers() {
   const users = await prisma.user.findMany({});
-  if (users.length > 0) {
+  if (users.length === 0) {
     const salts = Number(process.env.HASH_SALTS) || 12;
     const data = Array.from<unknown, Omit<User, "id">>({ length: 5 }, () => ({
       firstName: faker.person.firstName(),
