@@ -40,8 +40,27 @@ async function getByTags(tags: number[]) {
   });
 }
 
+async function update(idProject: number, body: ProjectBody) {
+  return await prisma.project.update({
+    where: {
+      id: idProject,
+    },
+    data: body,
+  });
+}
+
+async function remove(idProject: number) {
+  return await prisma.project.delete({
+    where: {
+      id: idProject,
+    },
+  });
+}
+
 export const projectRepository = {
   create,
   getAll,
   getByTags,
+  update,
+  remove
 };

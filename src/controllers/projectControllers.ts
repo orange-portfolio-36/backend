@@ -32,3 +32,26 @@ export async function findProjectsByTags(
 
   res.status(200).send(projects);
 }
+
+export async function updateProject(
+  req: Request<{ idProject: string }, {}, ProjectBody>,
+  res: Response
+) {
+  const idProject = parseInt(req.params.idProject, 10);
+  const body = req.body;
+
+  await projectService.update(idProject, body);
+
+  res.sendStatus(204);
+}
+
+export async function removeProject(
+  req: Request<{ idProject: string }>,
+  res: Response
+) {
+  const idProject = parseInt(req.params.idProject, 10);
+
+  await projectService.remove(idProject);
+
+  res.sendStatus(204);
+}
