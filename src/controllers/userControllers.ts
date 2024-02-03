@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { userService } from "../services/userServices";
-import { SessionRevoke, SigninBody, SignupBody } from "../@types";
+import {
+  GoogleCredentials,
+  SigninBody,
+  SignupBody,
+} from "../@types";
 import { sessionService } from "../services/sessionServices";
 
 export async function signUp(req: Request<{}, {}, SignupBody>, res: Response) {
@@ -15,6 +19,17 @@ export async function signIn(req: Request<{}, {}, SigninBody>, res: Response) {
   const body = req.body;
 
   const tokens = await userService.signIn(body);
+
+  res.status(200).send(tokens);
+}
+
+export async function googleAuth(
+  req: Request<{}, {}, GoogleCredentials>,
+  res: Response
+) {
+  const credential = req.body;
+
+  const tokens = await userService.googleAuth(credential);
 
   res.status(200).send(tokens);
 }
