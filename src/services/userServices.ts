@@ -21,7 +21,7 @@ async function signUp(body: SignupBody) {
     password = hashSync(body.password, Number(salts));
   }
   const promise = userRepository.create({ ...body, password });
-  await handlePrismaPromise(promise);
+  return await handlePrismaPromise(promise);
 }
 
 async function signIn({ email, password }: SigninBody) {
@@ -56,12 +56,16 @@ async function googleAuth(credential: GoogleCredentials) {
 
       return tokens;
     } catch (error) {
-      await signUp({
+      const user = await signUp({
         email: email,
         firstName: given_name,
         lastName: family_name ?? "",
         password: null,
       });
+
+      const tokens = await generateTokens(user.id);
+
+      return tokens
     }
   }
 }
@@ -98,5 +102,5 @@ async function handlePrismaPromise<T>(prismaPromise: Promise<T>) {
 export const userService = {
   signUp,
   signIn,
-  googleAuth
+  googleAuth,
 };

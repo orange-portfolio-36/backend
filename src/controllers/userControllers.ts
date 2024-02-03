@@ -18,9 +18,18 @@ export async function signUp(req: Request<{}, {}, SignupBody>, res: Response) {
 export async function signIn(req: Request<{}, {}, SigninBody>, res: Response) {
   const body = req.body;
 
-  const tokens = await userService.signIn(body);
+  const {accessToken, refreshToken} = await userService.signIn(body);
 
-  res.status(200).send(tokens);
+  res.cookie('accessToken', accessToken, {
+    httpOnly: true,
+  })
+
+
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+  })
+
+  res.sendStatus(200);
 }
 
 export async function googleAuth(
@@ -31,7 +40,17 @@ export async function googleAuth(
 
   const tokens = await userService.googleAuth(credential);
 
-  res.status(200).send(tokens);
+  if(!tokens) throw new Error('Erro ao autenticar')
+
+  res.cookie('accessToken', tokens.accessToken, {
+    httpOnly: true,
+  })
+
+  res.cookie('refreshToken', tokens.refreshToken, {
+    httpOnly: true,
+  })
+
+  res.sendStatus(200);
 }
 
 export async function signOut(
