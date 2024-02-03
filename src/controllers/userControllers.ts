@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { userService } from "../services/userServices";
-import { SigninBody, SignupBody } from "../@types";
+import { SessionRevoke, SigninBody, SignupBody } from "../@types";
+import { sessionService } from "../services/sessionServices";
 
 export async function signUp(req: Request<{}, {}, SignupBody>, res: Response) {
   const body = req.body;
@@ -16,4 +17,14 @@ export async function signIn(req: Request<{}, {}, SigninBody>, res: Response) {
   const tokens = await userService.signIn(body);
 
   res.status(200).send(tokens);
+}
+
+export async function signOut(
+  req: Request<{}, {}, { refreshToken: string }>,
+  res: Response
+) {
+  const token = req.body.refreshToken;
+  await sessionService.revoke({ token });
+
+  res.sendStatus(200);
 }

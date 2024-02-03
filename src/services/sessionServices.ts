@@ -16,6 +16,7 @@ async function revoke(data: SessionRevoke) {
 async function validate(refreshToken: string) {
   const secret = getSecret();
   try {
+    await sessionRepository.findOrFail(refreshToken)
     const payload = jwt.verify(refreshToken, secret) as TokenPayload;
     return getAccessToken(payload);
   } catch (error) {

@@ -9,7 +9,16 @@ function revoke({ token }: SessionRevoke) {
   return prisma.session.delete({ where: { token } });
 }
 
+async function findOrFail(token: string) {
+  await prisma.session.findFirstOrThrow({
+    where: {
+      token,
+    },
+  });
+}
+
 export const sessionRepository = {
   create,
   revoke,
+  findOrFail,
 };
