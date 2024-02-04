@@ -5,12 +5,11 @@ import { conflictError } from "../errors/conflictError";
 import {
   GoogleCredentials,
   SigninBody,
+  SigninResponse,
   SignupBody,
   TokenPayload,
 } from "../@types";
 import { unauthorizedError } from "../errors/unauthorizedError";
-import { sessionRepository } from "../repositories/sessionRepositories";
-import jwt from "jsonwebtoken";
 import { getAccessToken } from "../helpers/getAccessToken";
 import { verifyGoogleToken } from "../configs/googleConfig";
 
@@ -24,7 +23,10 @@ async function signUp(body: SignupBody) {
   return await handlePrismaPromise(promise);
 }
 
-async function signIn({ email, password }: SigninBody) {
+async function signIn({
+  email,
+  password,
+}: SigninBody): Promise<SigninResponse> {
   if (!password) throw unauthorizedError({ message: "Acesso negado" });
 
   const promise = userRepository.findOrFail({ email });
@@ -36,12 +38,19 @@ async function signIn({ email, password }: SigninBody) {
 
   if (!isValid) throw unauthorizedError({ message: "Acesso negado" });
 
-  const tokens = await generateTokens(user.id);
+  const token = generateTokens(user.id);
 
-  return tokens;
+  return {
+    email: user.email,
+    id: user.id,
+    name: user.firstName,
+    token,
+  };
 }
 
-async function googleAuth(credential: GoogleCredentials) {
+async function googleAuth(
+  credential: GoogleCredentials
+): Promise<SigninResponse> {
   const user = await verifyGoogleToken(credential);
 
   if (!user) throw unauthorizedError({ message: "Acesso negado" });
@@ -52,9 +61,14 @@ async function googleAuth(credential: GoogleCredentials) {
     try {
       const userFound = await userRepository.findOrFail({ email });
 
-      const tokens = await generateTokens(userFound.id);
+      const token = generateTokens(userFound.id);
 
-      return tokens;
+      return {
+        token,
+        email: email,
+        id: userFound.id,
+        name: given_name,
+      };
     } catch (error) {
       const user = await signUp({
         email: email,
@@ -63,27 +77,28 @@ async function googleAuth(credential: GoogleCredentials) {
         password: null,
       });
 
-      const tokens = await generateTokens(user.id);
+      const token = generateTokens(user.id);
 
-      return tokens
+      return {
+        id: user.id,
+        email: user.email,
+        name: user.firstName,
+        token,
+      };
     }
   }
+  throw new Error("Erro ao autenticar");
 }
 
-async function generateTokens(userId: number) {
+function generateTokens(userId: number) {
   const secret = process.env.JWT_SECRET;
 
   if (!secret) throw new Error("Segredo não encontrado!");
   const payload: TokenPayload = { userId: String(userId) };
 
-  const refreshToken = jwt.sign(payload, secret, {
-    expiresIn: "1d",
-  });
   const accessToken = getAccessToken(payload);
 
-  await sessionRepository.create({ token: refreshToken, userId });
-
-  return { refreshToken, accessToken };
+  return accessToken;
 }
 
 const handlePrismaError = (error: unknown) => {

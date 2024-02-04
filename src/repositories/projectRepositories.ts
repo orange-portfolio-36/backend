@@ -62,5 +62,5 @@ export const projectRepository = {
   getAll,
   getByTags,
   update,
-  remove
+  remove,
 };

@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
 import { userService } from "../services/userServices";
-import {
-  GoogleCredentials,
-  SigninBody,
-  SignupBody,
-} from "../@types";
+import { GoogleCredentials, SigninBody, SignupBody } from "../@types";
 import { sessionService } from "../services/sessionServices";
 
 export async function signUp(req: Request<{}, {}, SignupBody>, res: Response) {
@@ -18,18 +14,9 @@ export async function signUp(req: Request<{}, {}, SignupBody>, res: Response) {
 export async function signIn(req: Request<{}, {}, SigninBody>, res: Response) {
   const body = req.body;
 
-  const {accessToken, refreshToken} = await userService.signIn(body);
+  const response = await userService.signIn(body);
 
-  res.cookie('accessToken', accessToken, {
-    httpOnly: true,
-  })
-
-
-  res.cookie('refreshToken', refreshToken, {
-    httpOnly: true,
-  })
-
-  res.sendStatus(200);
+  res.status(200).send(response);
 }
 
 export async function googleAuth(
@@ -38,19 +25,9 @@ export async function googleAuth(
 ) {
   const credential = req.body;
 
-  const tokens = await userService.googleAuth(credential);
+  const response = await userService.googleAuth(credential);
 
-  if(!tokens) throw new Error('Erro ao autenticar')
-
-  res.cookie('accessToken', tokens.accessToken, {
-    httpOnly: true,
-  })
-
-  res.cookie('refreshToken', tokens.refreshToken, {
-    httpOnly: true,
-  })
-
-  res.sendStatus(200);
+  res.status(200).send(response);
 }
 
 export async function signOut(

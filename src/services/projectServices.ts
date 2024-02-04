@@ -5,11 +5,11 @@ async function create(body: ProjectBody) {
   await projectRepository.create(body);
 }
 
-async function getAll(){
-  return await projectRepository.getAll()
+async function getAll() {
+  return await projectRepository.getAll();
 }
 
-async function getByTags(tags: number[]){
+async function getByTags(tags: number[]) {
   return await projectRepository.getByTags(tags);
 }
 
@@ -26,5 +26,5 @@ export const projectService = {
   getAll,
   getByTags,
   update,
-  remove
+  remove,
 };

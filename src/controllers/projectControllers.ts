@@ -17,7 +17,7 @@ export async function createProject(
   res.sendStatus(201);
 }
 
-export async function getAllProjects(req: Request, res: Response) {
+export async function getAllProjects(_: Request, res: Response) {
   const projects = await projectService.getAll();
   res.status(200).send(projects);
 }
