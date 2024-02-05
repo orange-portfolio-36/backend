@@ -8,7 +8,7 @@ export interface SigninResponse {
   name: string;
   email: string;
   id: number;
-  token: string;
+  jwt: string;
 }
 
 export interface TokenPayload {

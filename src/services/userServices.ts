@@ -38,13 +38,13 @@ async function signIn({
 
   if (!isValid) throw unauthorizedError({ message: "Acesso negado" });
 
-  const token = generateTokens(user.id);
+  const jwt = generateTokens(user.id);
 
   return {
     email: user.email,
     id: user.id,
     name: user.firstName,
-    token,
+    jwt,
   };
 }
 
@@ -61,10 +61,10 @@ async function googleAuth(
     try {
       const userFound = await userRepository.findOrFail({ email });
 
-      const token = generateTokens(userFound.id);
+      const jwt = generateTokens(userFound.id);
 
       return {
-        token,
+        jwt,
         email: email,
         id: userFound.id,
         name: given_name,
@@ -77,13 +77,13 @@ async function googleAuth(
         password: null,
       });
 
-      const token = generateTokens(user.id);
+      const jwt = generateTokens(user.id);
 
       return {
         id: user.id,
         email: user.email,
         name: user.firstName,
-        token,
+        jwt,
       };
     }
   }

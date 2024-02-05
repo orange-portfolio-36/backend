@@ -4,16 +4,17 @@ import {
   findProjectsByTags,
   getAllProjects,
   updateProject,
-  removeProject
+  removeProject,
 } from "../controllers/projectControllers";
+import { authMiddleware } from "../middlewares/authMiddleware";
 
 const projectRouter = Router();
 
 projectRouter
-  .post("/", createProject)
+  .post("/", authMiddleware, createProject)
   .get("/all", getAllProjects)
   .post("/tags", findProjectsByTags)
-  .put("/:update", updateProject)
-  .delete("/:remove", removeProject);
+  .put("/:update", authMiddleware,updateProject)
+  .delete("/:remove", authMiddleware, removeProject);
 
 export default projectRouter;
