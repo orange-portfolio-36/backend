@@ -18,8 +18,25 @@ async function update(idProject: number, body: ProjectBody) {
 }
 
 async function remove(idProject: number) {
-  return await projectRepository.remove(idProject);
+  const userConfirmation = await confirmExclusionFromUser();
+
+  if (userConfirmation) {
+    await projectRepository.remove(idProject);
+  } else {
+    throw new Error('Exclusão cancelada pelo usuário');
+  }
 }
+
+async function confirmExclusionFromUser(): Promise<boolean> {
+  const userConfirmation = await showDialog('Tem certeza que deseja excluir o projeto?');
+
+  return userConfirmation;
+}
+
+async function showDialog(message: string): Promise<boolean> {
+  return window.confirm(message);
+}
+
 
 export const projectService = {
   create,
