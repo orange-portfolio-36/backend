@@ -10,7 +10,12 @@ async function create(body: ProjectBody) {
 async function getAll() {
   return await prisma.project.findMany({
     include: {
-      User: true,
+      User: {
+        select: {
+          firstName: true,
+          lastName: true,
+        }
+      },
       ProjectTag: {
         include: {
           Tag: true,

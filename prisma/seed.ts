@@ -41,16 +41,16 @@ async function seedProjects(tags: Tag[], users: User[]) {
   const projects = await prisma.project.findMany({});
 
   if (projects.length === 0) {
-    const data = Array.from<unknown, Omit<Project, "id">>(
-      { length: 10 },
-      () => ({
-        description: faker.lorem.sentence(),
-        name: faker.lorem.word(),
-        url_image: faker.image.urlLoremFlickr(),
-        url_project: "https://orangejuice.com.br",
-        userId: getRandomItem(users).id,
-      })
-    );
+    const data = Array.from<
+      unknown,
+      Omit<Project, "id" | "createdAt" | "updateAt">
+    >({ length: 10 }, () => ({
+      description: faker.lorem.sentence(),
+      name: faker.lorem.word(),
+      url_image: faker.image.urlLoremFlickr(),
+      url_project: "https://orangejuice.com.br",
+      userId: getRandomItem(users).id,
+    }));
 
     for (const project of data) {
       await prisma.project.create({
