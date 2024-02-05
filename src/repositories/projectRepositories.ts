@@ -10,6 +10,7 @@ async function create(body: ProjectBody) {
 async function getAll() {
   return await prisma.project.findMany({
     include: {
+      User: true,
       ProjectTag: {
         include: {
           Tag: true,
@@ -31,6 +32,7 @@ async function getByTags(tags: number[]) {
       },
     },
     include: {
+      User: true,
       ProjectTag: {
         include: {
           Tag: true,
