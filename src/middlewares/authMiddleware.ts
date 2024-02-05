@@ -16,7 +16,7 @@ export function authMiddleware(
 
   const secret = process.env.JWT_SECRET;
   if (!secret) throw new Error("Segredo não encontrado!");
-
+  
   const payload = jwt.verify(token, secret) as TokenPayload;
 
   res.locals["userId"] = Number(payload.userId);
